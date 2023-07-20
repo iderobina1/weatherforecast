@@ -3,7 +3,7 @@ var searchHistory = [];
 function fetchData(cityName) {
   var units = 'metric';
   var lang = 'en';
-  var key = '46d308181a9f1f5e721c826c25c5e5ab';
+  var key = '46d308181a9f1f5e721c826c25c5e5ab'; 
 
   var apiWeather = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${key}&units=${units}&lang=${lang}`;
 
@@ -16,14 +16,12 @@ function fetchData(cityName) {
 
       var currentWeather = data.list[0];
 
-      // Display current weather information
       document.getElementById("currentDate").textContent = new Date(currentWeather.dt * 1000).toLocaleDateString();
       document.getElementById("currentIcon").src = `http://openweathermap.org/img/w/${currentWeather.weather[0].icon}.png`;
       document.getElementById("currentTemp").textContent = `Temperature: ${currentWeather.main.temp} °C`;
       document.getElementById("currentHumidity").textContent = `Humidity: ${currentWeather.main.humidity}%`;
       document.getElementById("currentWindSpeed").textContent = `Wind Speed: ${currentWeather.wind.speed} m/s`;
 
-      // Display 5-day forecast
       for (var i = 1; i <= 4; i++) {
         var forecastData = data.list[i * 8]; // Get data for every 24 hours (i * 8)
         document.getElementById("day" + i).textContent = new Date(forecastData.dt * 1000).toLocaleDateString();
@@ -33,7 +31,8 @@ function fetchData(cityName) {
         document.getElementById("windSpeed" + i).textContent = `Wind Speed: ${forecastData.wind.speed} m/s`;
       }
 
-      // Add the city to the search history array and update the UI
+      saveToLocalStorage(cityName);
+
       if (!searchHistory.includes(cityName)) {
         searchHistory.push(cityName);
         updateSearchHistoryUI();
@@ -42,6 +41,22 @@ function fetchData(cityName) {
     .catch(function (error) {
       console.error('Error fetching weather data:', error);
     });
+}
+
+function saveToLocalStorage(cityName) {
+
+  var existingHistory = localStorage.getItem('searchHistory');
+
+  if (existingHistory) {
+
+    var parsedHistory = JSON.parse(existingHistory);
+    parsedHistory.push(cityName);
+    localStorage.setItem('searchHistory', JSON.stringify(parsedHistory));
+  } else {
+
+    var newHistory = [cityName];
+    localStorage.setItem('searchHistory', JSON.stringify(newHistory));
+  }
 }
 
 function GetInfo() {
@@ -59,7 +74,6 @@ mySearch.addEventListener('click', function () {
   GetInfo();
 });
 
-// Function to update the search history UI
 function updateSearchHistoryUI() {
   var searchHistoryDiv = document.getElementById("searchHistory");
   searchHistoryDiv.innerHTML = "";
@@ -70,7 +84,6 @@ function updateSearchHistoryUI() {
     historyItem.textContent = city;
     historyItem.classList.add("history-item");
 
-    // Add a click event listener to each history item
     historyItem.addEventListener("click", function () {
       var cityName = this.textContent;
       document.getElementById("cityInput").value = cityName;
@@ -81,5 +94,8 @@ function updateSearchHistoryUI() {
   }
 }
 
-// Update search history UI when the page loads
 updateSearchHistoryUI();
+
+
+
+//

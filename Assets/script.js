@@ -93,6 +93,7 @@ function updateSearchHistoryUI() {
     });
 
     searchHistoryDiv.appendChild(historyItem);
+    
   }
 }
 

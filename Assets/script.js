@@ -1,3 +1,4 @@
+
 var searchHistory = [];
 
 function fetchData(cityName) {

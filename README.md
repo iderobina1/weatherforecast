@@ -19,7 +19,8 @@ Five day weather forecast is a simple web application, that provides you with we
 
 ## Getting Started
 
-Simply type in a City Name and view the weather results.
+Simply type in a City Name and view the weather results. 
+Look for your past results.
 
 
 ## Contributing

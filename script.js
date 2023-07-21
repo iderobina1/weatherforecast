@@ -3,7 +3,7 @@ var searchHistory = [];
 function fetchData(cityName) {
   var units = 'metric';
   var lang = 'en';
-  var key = '46d308181a9f1f5e721c826c25c5e5ab'; 
+  var key = '46d308181a9f1f5e721c826c25c5e5ab';
 
   var apiWeather = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${key}&units=${units}&lang=${lang}`;
 
